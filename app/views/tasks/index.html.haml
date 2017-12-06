@@ -1,0 +1,16 @@
+%h3 Current tasks
+%table{border: 1}
+  %tbody
+    %tr
+      %td Task
+      %td Start date
+      %td End date
+    - @tasks.each do |task|
+      %tr
+        %td= task.name
+        %td= human_date(task.started_at)
+        %td= human_date(task.ended_at)
+
+%p= link_to 'Export current tasks', export_tasks_path(format: :xlsx)
+
+%p= link_to 'Import some new tasks', new_import_task_path

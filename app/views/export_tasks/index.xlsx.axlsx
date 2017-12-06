@@ -1,0 +1,30 @@
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  header_text = s.add_style b: true,
+                            sz: 11,
+                            font_name: "Calibri",
+                            border: { style: :thin, color: "00" },
+                            alignment: {
+                              horizontal: :center,
+                              vertical: :center,
+                              wrap_text: true
+                            }
+
+  data_text = s.add_style sz: 11,
+                          font_name: "Calibri",
+                          border: { style: :thin, color: "00" },
+                          alignment: {
+                            horizontal: :center,
+                            vertical: :center,
+                            wrap_text: true
+                          }
+
+  wb.add_worksheet(name: "tab 1") do |sheet|
+    header_row = [ "Task name", "Task started", "Task ended" ]
+    sheet.add_row header_row, style: header_text
+    @tasks.each do |task|
+      sheet.add_row [task.name, human_date(task.started_at), human_date(task.ended_at)], style: data_text
+    end
+  end
+end

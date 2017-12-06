@@ -1,0 +1,35 @@
+- if @errors.present?
+  %h3 These positions were loaded with error
+  %table{border: 1}
+    %thead
+      %tr
+        %th Row
+        %th Task name
+        %th Error
+    %tbody
+      - @errors.each do |error|
+        %tr
+          %td= error[0]
+          %td= error[1]
+          %td= error[2].join
+
+- if @successes.present?
+  %h3 These positions were loaded successfully
+  %table{border: 1}
+    %thead
+      %tr
+        %td Row
+        %td Task name
+    %tbody
+      - @successes.each do |success|
+        %tr
+          %td= success[0]
+          %td= success[1]
+%h3 Load some new tasks from the xlsx document
+
+= form_for :task, url: import_tasks_path do |f|
+  .form-group
+    = f.file_field :file
+  .form-group
+    = f.submit 'Load'
+
